@@ -4,8 +4,12 @@
 ## Exercice 1 - Compilation et exécution
 
 1. Quels sont les avantages et désavantages d'un langage dit "*compilé*" (C, C++, Pascal) ou "*semi-compilé*" (Java) comparé à un langage dit "*interpreté*" (Python, PHP, Javascript, etc) ?
-2. Quelle est la différence entre une erreur de compilation et une erreur d'exécution ? (à quel moment se produisent-elles ? dans quelles circonstances ? comment les identifier ? comment les corriger ? ...)
-3. Que signifie en pratique l'expression "*undefined behavior*" (UB) ? Peut-on compiler un programme contenant du code classifié UB par le standard ? Si oui, que peut-il se produire au moment de son exécution ?
+`Les languages interprété sont généralemnts moins performent que les languages compilé/semi-compilé, deplus, si une erreur grossière à leiu on obteint même pas l'executable. Cela nous "force" à corriger`
+2. Quelle est la différence entre une erreur de compilation et une erreur d'exécution ? (à quel moment se produisent-elles ? dans quelles circonstances ? comment les identifier ? comment les corriger ? ...) 
+* `Erreur de compilation: l'erreur dans le code crée un poblème que le compilateur ne sait pas résoudre. Il ne poura donc pas créer d'executable. Ces erreures sont généralement simple à corriger car le compilateur nous indique la ligne posent probème. Vennant  généralement d'une érreure de gramaire du language il suffit souvent de relire attentivement le code concerné. (noms, fonction appellée, type des paramères).`
+* `Erreur d'execution: plus comunément appelé bugg, elle sont souvent dure à reproduire car le code est gramaticalement correcte mais ne veux pas dire ce que l'ont voulais exprimer à la machine. Viens souvent d'erreur d'inatention. Peuvent être chassée à l'aide de débugger ou au pire d'affichages d'état manulellement.`
+
+3. Que signifie en pratique l'expression "*undefined behavior*" (UB) ? Peut-on compiler un programme contenant du code classifié UB par le standard ? Si oui, que peut-il se produire au moment de son exécution ? `Une UB est  un cas possible gramaticalement pour le language mais dont le comportement n'a pas été définit/codé. (souvent car il ammènerait une breche de sécurité.) Un tel code peut donc tout à  fait être compilé. Il peut litéralement tout ce passer à l'execution cependant ce n'est pas`
 
 
 ## Exercice 2 - Primitives et initialisation
@@ -20,8 +24,19 @@ int v { 2 }; // initialisation avec '{ value }' -> value
 int v(2);    // initialisation avec '(value)'   -> value
 ```
 
-1. Parmi les lignes suivantes, lesquelles déclenchent des erreurs de compilation ? Quelles sont ces erreurs et comment les corriger ?\
+1. Parmi les lignes suivantes, lesquelles déclenchent des erreurs de compilation ? Quelles sont ces erreurs et comment les corriger ?
+* `const short s1` n'est pas initialisé alors que c'est une constante.
+* `bool b3{il}` la variable 'il' vaux 2 et on souhaite le stoquer dans un boolean ne pouvant valoir que 0 ou 1.
+* `char c8{"a"}` stocague d'une string ou d'un char* dans un char.
+* `double& d12` pas de valeur donnée à la création d'une référence.
+* `int& i15 = i1` création d'une ref nn constante sur une valeur constante.
+* `int& i16 = b2` création d'une rférence sur un type ne supportant pas toutes les actions du type de la référence.
+\
 Mêmes questions en ajoutant l'option `-Werror` à la compilation.\
+On ajoute à la liste:
+* `short s0`
+* `bool b4`\
+Car ils ne sont pas initialisés.
 Vous pouvez utiliser [CompilerExplorer](https://www.godbolt.org/z/rPPoro) pour tester la compilation de petits snippets de code.
 
 ```cpp
@@ -53,7 +68,8 @@ const int& i17{i14};
 ```
 
 2. Pouvez-vous donner la valeur de `s0` ? De `ul7` ?
-
+* `s0` à une valeur completement aléatoire.
+* `ul7` nope trop illisible.
 
 ## Exercice 3 - Les fonctions et leurs paramètres
 
@@ -62,32 +78,36 @@ const int& i17{i14};
 ```cpp
 #include <iostream>
 
-XX add(XX a, XX b) {
-  return a + b;
+int add(const int a, const int b) {
+    return a + b;
 }
 
-XX add_to(XX a, XX b) {
-  a += b;
+void add_to(int& a, int b) {
+    a += b;
 }
 
 int main() {
-  const int x{10};
-  int y = add(x, x);
-  add_to(y, 22);
-  std::cout << y << std::endl;
-  return 0;
+    const int x { 10 };
+    int       y = add(x, x);
+    add_to(y, 22);
+    std::cout << y << std::endl;
+    return 0;
 }
 ```
 
 2. En C++, vous pouvez passer vos paramètres par valeur, par référence et par référence constante.
-Quelles sont les différences entre ces différentes méthodes de passage ?
+Quelles sont les différences entre ces différentes méthodes de passage ? 
+* ` passage par valeur : la valeur esst copiée dans le constexte de la fontion appelée.`
+* `passage par référence: on ne copie que la référence dans le constexte de la fonction appellée, ce qui est énéralement moins couteux lorsqu'il s'agit d'une reférence sur un objet complexe.`
+* `passage par référence constante: la fonciton appellée ne peu pas modifier la cible de la référence. (un peut comme paser une fichier en read-only)`
 Dans quels contextes est-il préférable de passer par valeur ? Par référence ? Et par référence constante ?
+`On préfére passer par valeur lorsque c'est une primitive dnt on ne souhaite pas conserver les changements. Pour le passage par référence, on peut l'utilliser pour un objet dans lequel on va effectuer des changements. Les références constante sont utilisée pour passer uniquement des information comme la taille totale de la fenetre dans lequel un wiget vas pouvoir s'afficher: il wiget à besion de l'information mais il est hors de question qu'il la modifie.`
 
 3. Modifiez les signatures des fonctions suivantes de manière à ce que le passage de paramètres soit le plus efficace et sécurisé possible.
 Vous pouvez vous aidez des commentaires pour comprendre comment les fonctions utilisent leurs paramètres.
 ```cpp
 // Return the number of occurrences of 'a' found in string 's'.
-int count_a_occurrences(std::string s);
+int count_a_occurrences(const std::string& s);
 
 // Update function of a rendering program.
 // - dt (delta time) is read by the function to know the time elapsed since the last frame.
@@ -101,11 +121,11 @@ void update_loop(const float& dt, std::string& errors_out);
 //    -> res is false, since not all values are positive
 //    -> negative_indices contains { 1, 3 } because values[1] = -2 and values[3] = -4
 //    -> negative_count is 2
-bool are_all_positives(std::vector<int> values, int negative_indices_out[], size_t& negative_count_out);
+bool are_all_positives(const std::vector<int>& values, int negative_indices_out[], size_t& negative_count_out);
 
 // Concatenate 'str1' and 'str2' and return the result.
 // The input parameters are not modified by the function.
-std::string concatenate(char* str1, char* str2);
+std::string concatenate(const char* str1, const char* str2);
 ```
 
 
