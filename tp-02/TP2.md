@@ -34,8 +34,9 @@ int main()
   return 0;
 }
 ```
-
+`Les 2 valeurs affichée à la fin sont 17 et 17.`
 2. Que se passe si on enlève la ligne marquée "initialisation" ?
+`La glaubale "glogal_sum" n'est alors pas définie correctement. Car comme les variable static des classe elle a besoin d'une valeur pour être initialisée.`
 
 ## Exercice 2 - Copies
 
@@ -53,18 +54,17 @@ private:
 ```
 
 Attention, pour l'initialisation de `_count`, vous essayerez d'utiliser un in-class initializer.\
-Pourquoi n'est-il pas possible d'initialiser avec `= { 26, 0 }` ? Que devez-vous écrire à la place ?
+Pourquoi n'est-il pas possible d'initialiser avec `= { 26, 0 }` ? `Car on tombe sur le cas d'initialisation par liste.` Que devez-vous écrire à la place ? `Il faut faire std::vector<type_t> name = std::vector<type_t>(number of element, element value);.`
 
 2. Ajoutez un constructeur de copie à votre classe et placez-y des instructions d'affichage (`std::cout`).\
-Si votre programme ne compile plus, expliquez pourquoi et résolvez le problème.
+Si votre programme ne compile plus, expliquez pourquoi et résolvez le problème. `On avait donc un constructeur de copie, donc le compilateur ne créais plus de compilateur par defaut implementé par défaut.`
 
 3. Dans le code suivant, selon vous, combien de fois le constructeur de copie sera appelé ?\
-Exécutez le code pour vérifier votre théorie. Recherchez ensuite sur Internet le concept de `copy-elision`.
+Exécutez le code pour vérifier votre théorie. Recherchez ensuite sur Internet le concept de `copy-elision`. `Une seule fois car le compilateur reprère que la copie intermédière ne sert qu'à faire la suivante.`
 ```cpp
 Histogram h1, h2;
 Histogram h3 { Histogram { h1 } };
 ```
-
 ## Exercice 3 - Rappels d'événements !
 
 Vous allez implémenter un petit programme permettant d'enregistrer des rappels d'événements et de déclencher ces rappels au bout d'une certaine durée.

@@ -99,17 +99,9 @@ vector<pair<string, string>> open_dictionary(const string& path) {
         file >> translation;
         // debug
         // cout << "translation = \'" << translation << '\'' << endl;
-
-        dict.emplace_back(pair { word, translation });
+        if (word != "" || translation != "")
+        { dict.emplace_back(pair { word, translation }); }
     }
-    dict.pop_back(); /* as the 'read a word' opperationt skips whites, when there is a dictioinary, it will
-    read all line and stops right at the end of the last word. This mean that there is still a '\n' between
-    the cursor and EOF. Thus when reading in a loop, it will attempt a fnal read that will then skipp this
-    last white and be unable to read any thing. Meaning the last read is always 2 strings = "". That gets
-    stored in the dictionary and then printet out in the save file. This line avoids that behaviour by
-    destoying the "" "" trailing lin ein the dictionary.
-    */
-
     // debugg
     // for (auto elem : dict)
     //{ cout << '\'' << elem.first << "\' \'" << elem.second << '\'' << endl; }
