@@ -4,11 +4,11 @@
 class SecondHand
 {
 private:
-    int         _seconds = 0;
-    MinuteHand& _minutes;
+    unsigned int _seconds = 0;
+    MinuteHand&  _minutes;
 
 public:
     SecondHand(MinuteHand&);
-    int  get_seconds() const;
-    void advence();
+    unsigned int get_seconds() const;
+    void         advence();
 };

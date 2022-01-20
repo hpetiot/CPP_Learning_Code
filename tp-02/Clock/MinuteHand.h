@@ -3,9 +3,9 @@
 class MinuteHand
 {
 private:
-    int _minutes = 0;
+    unsigned int _minutes = 0;
 
 public:
-    int  get_minutes() const;
-    void advance();
+    unsigned int get_minutes() const;
+    void         advance();
 };

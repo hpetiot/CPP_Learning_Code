@@ -6,7 +6,7 @@ SecondHand::SecondHand(MinuteHand& minutes)
     : _minutes { minutes } {
 }
 
-int SecondHand::get_seconds() const {
+unsigned int SecondHand::get_seconds() const {
     return _seconds;
 }
 

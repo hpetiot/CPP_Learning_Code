@@ -65,7 +65,7 @@ Exécutez le code pour vérifier votre théorie. Recherchez ensuite sur Internet
 Histogram h1, h2;
 Histogram h3 { Histogram { h1 } };
 ```
-## Exercice 3 - Rappels d'événements !
+## Exercice 3 - Rappbels d'événements !
 
 Vous allez implémenter un petit programme permettant d'enregistrer des rappels d'événements et de déclencher ces rappels au bout d'une certaine durée.
 

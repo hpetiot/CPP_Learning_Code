@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <utility>
 
@@ -11,8 +12,15 @@ class Event
 public:
     Event(const Time& notif_time, const std::string& message)
         : _notif_time { notif_time }
-        , _message { message }
-    {}
+        , _message { message } {}
+    bool notify_time(int current_min, int current_sec) {
+        if (_notif_time.first - current_min == 0 && _notif_time.second - current_sec == 0)
+        {
+            std::cout << _message << std::endl;
+            return true;
+        }
+        return false;
+    }
 
 private:
     Time        _notif_time;

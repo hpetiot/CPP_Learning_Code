@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-int MinuteHand::get_minutes() const {
+unsigned int MinuteHand::get_minutes() const {
     return _minutes;
 }
 
