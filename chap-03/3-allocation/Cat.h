@@ -5,14 +5,16 @@
 
 class Cat
 {
-    friend std::ostream& operator<<(std::ostream& stream, const Cat& cat)
-    {
-        return stream << "I have a cat named " << cat._name << ".";
+    friend std::ostream& operator<<(std::ostream& stream, const Cat& cat) {
+        return stream << "I have a cat named " << cat.name << ".";
     }
 
 public:
-    bool operator==(const Cat& other) const { return _name == other._name; }
+    Cat(const std::string& name)
+        : name { name } {}
+    ~Cat() { std::cout << name << " est mort!" << std::endl; }
+    bool operator==(const Cat& other) const { return name == other.name; }
 
 private:
-    std::string _name = "Felix";
+    std::string name;
 };

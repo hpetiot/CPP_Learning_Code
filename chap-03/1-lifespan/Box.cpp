@@ -1,7 +1,7 @@
 #include "Box.h"
 
 #include <iostream>
-
+/*
 int main()
 {
     std::cout << "box1 block begin" << std::endl;
@@ -20,3 +20,4 @@ int main()
 
     return 0;
 }
+*/

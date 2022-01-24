@@ -1,3 +1,9 @@
+add_executable(c3-1-1
+    1-lifespan/Box.cpp
+    1-lifespan/Box.cpp
+    1-lifespan/main1.cpp
+)
+
 add_executable(c3-1-box
     1-lifespan/Box.cpp
     1-lifespan/Box.h
