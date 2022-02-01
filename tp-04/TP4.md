@@ -6,6 +6,7 @@ Le code initial de l'exercice est dans tp-04/PhoneCalls.
 
 1. Regardez le contenu de la classe `Phone`.\
 Conceptuellement, quelle est la différence entre un attribut de type `const Person` et un attribut de type `const Person&` ?\
+_Un const Persone est une Personne ne pouvant pas être modifiée. Une const Person& est une référence sur une Persone ne pouvant pas être modifiée. On ne fait donc pas de copie lorsqu'on les passent en paramètre._\
 En pratique, qu'est-ce que cela change de stocker un attribut par référence ? Par exemple, quelle sera la position de `phone._owner` après l'exécution des instructions ci-dessous ?
 ```cpp
 Person paul { "Paul", 3 };
@@ -43,9 +44,9 @@ normal_phone.ring();				// This is the voicemail of Paul. Please leave a message
 ```
 
 5. Le programme a appelé la fonction `HomePhone::ring` sur une référence de type `Phone`.\
-Par quel terme désigne-t-on ce genre d'appel ?
-Comment appelle-t-on les classes sur lesquelles on peut effectuer un appel de ce type ?
-Que faut-il toujours faire lorsqu'on définit ce type de classe et pourquoi ?\
+Par quel terme désigne-t-on ce genre d'appel ? _Un appel virtuel_.\
+Comment appelle-t-on les classes sur lesquelles on peut effectuer un appel de ce type ? _Des classe polymorphes_.\
+Que faut-il toujours faire lorsqu'on définit ce type de classe et pourquoi ? _Mettre le destructeur virtuel et les champs en protected ainsi que les fonction à override en vrtuel_.\
 Si vous n'avez pas pensé à le faire, c'est le moment de vous rattraper.
 
 6. Créez une nouvelle classe `MobilePhone`, de manière à pouvoir écrire :
@@ -63,7 +64,9 @@ Person paul { "Paul", 3 };
 Phone normal_phone { paul };		// Doesn't compile!
 ```
 
-8. Est-ce que le code suivant compile ? Cela vous paraît-il normal ? Comment pouvez-vous expliquer ce résultat ?
+8. Est-ce que le code suivant compile ? _Oui_.\
+ Cela vous paraît-il normal ? _Oui_.\
+  Comment pouvez-vous expliquer ce résultat ? _Polymorphisme_.
 ```cpp
 Person paul { "Paul", 3 };
 HomePhone far_phone { paul, -10 };
@@ -72,8 +75,8 @@ const Phone normal_phone = far_phone;
 normal_phone.ring();
 ```
 
-9. En C++, que faut-il faire pour être tout à fait sûr qu'une classe ne puisse plus être instanciée du tout ?\
-Modifiez la déclaration de `Phone::ring` pour que `Phone` ne soit plus instanciable. Comment appelle-t-on ce type de classe ?
+9. En C++, que faut-il faire pour être tout à fait sûr qu'une classe ne puisse plus être instanciée du tout ? _Il faut mettre ces constructue et destructeur en protected et ces fonctions membre en virtuel pur_.\
+Modifiez la déclaration de `Phone::ring` pour que `Phone` ne soit plus instanciable. Comment appelle-t-on ce type de classe ? _Une classe Abstraite_.
 
 10. Pourquoi le code ci-dessous ne compile probablement plus ?
 Effectuez les modifications permettant de réinstancier des objets de type `MobilePhone`, si vous ne l'aviez pas fait à la question précédente.
