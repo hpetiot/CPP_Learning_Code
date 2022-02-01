@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <cmath>
 #include <ostream>
 
@@ -7,6 +8,10 @@ class Point
 public:
     float x, y;
 
+    bool is_between(const Point& A, const Point& B) const {
+        return (x >= std::min(A.x, B.x)) && (x <= std::max(A.x, B.x)) && (y >= std::min(A.y, B.y)) &&
+               (y <= std::max(A.y, B.y));
+    }
     bool  operator<(const Point& p) const { return (x == p.x) ? (y < p.y) : (x < p.x); }
     bool  operator==(const Point& p) const { return (x == p.x) && (y == p.y); }
     bool  operator!=(const Point& p) const { return !operator==(p); }
@@ -24,8 +29,7 @@ public:
     Point& operator*=(const float scale) { return *this = *this * scale; }
     void   normalize(const float target_length = 1.0f) { *this = normalized(target_length); }
 
-    friend std::ostream& operator<<(std::ostream& os, const Point& p)
-    {
+    friend std::ostream& operator<<(std::ostream& os, const Point& p) {
         return os << '(' << p.x << ',' << p.y << ')';
     }
 };

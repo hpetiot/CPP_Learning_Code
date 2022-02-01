@@ -1,7 +1,8 @@
 #pragma once
 #include "point.hpp"
 
-using PointContainer = /*???*/;
+#include <list>
+using PointContainer = std::list<Point>;
 
 // forward-declare the Line class in order to use it for intersection
 class Line;
@@ -13,7 +14,7 @@ public:
     virtual PointContainer intersect(const Line& ln) const     = 0;
     virtual ~Shape() {}
 
-    std::ostream& print(std::ostream& os) const { return os << "some shape"; }
+    virtual std::ostream& print(std::ostream& os) const { return os << "unknown shape"; }
 
     friend std::ostream& operator<<(std::ostream& os, const Shape& s) { return s.print(os); }
 };

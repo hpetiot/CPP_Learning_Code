@@ -13,8 +13,7 @@ protected:
 public:
     Line(const Point& _first, const Point& _last)
         : first { _first }
-        , last { _last }
-    {}
+        , last { _last } {}
 
     Point direction() const { return last - first; }
 
@@ -29,8 +28,7 @@ public:
     // dir1.y * dir2.x * b + dir1.y * (offset2.x - offset1.x) = dir1.x * dir2.y * b + dir1.x * (offset2.y -
     // offset1.y) that is: b = (dir1.x * (offset2.y - offset1.y) - dir1.y * (offset2.x - offset1.x)) / (dir1.y
     // * dir2.x - dir1.x * dir2.y)
-    PointContainer intersect(const Line& ln) const override
-    {
+    PointContainer intersect(const Line& ln) const override {
         const Point dir1 = direction().normalized();
         const Point dir2 = ln.direction().normalized();
         // if the lines are parallel, by convention, they don't intersect
@@ -45,6 +43,10 @@ public:
         }
         return {};
     }
+
+    PointContainer intersect(const Shape& other) const { return other.intersect(*this); }
+
+    std::ostream& print(std::ostream& os) const { return os << "Droite"; }
 
     ~Line() = default;
 };
